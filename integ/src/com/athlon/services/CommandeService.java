@@ -14,6 +14,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.athlon.entities.Commande;
 import com.athlon.utils.Statics;
+import gui.SessionManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,7 +184,7 @@ public class CommandeService {
 
     public int order() {
         cr = new ConnectionRequest();
-        cr.setUrl(Statics.BASE_URL + "/commande/orderCommande");
+        cr.setUrl(Statics.BASE_URL + "/commande/orderCommande" +"/"+ SessionManager.getId() );
         cr.setHttpMethod("POST");
 
         cr.addResponseListener(new ActionListener<NetworkEvent>() {

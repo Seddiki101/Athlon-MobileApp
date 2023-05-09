@@ -15,6 +15,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.stripe.exception.StripeException;
+import gui.SessionManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,11 +84,12 @@ public class CartService {
 
                 produit.setQantite((int) Float.parseFloat(obj.get("quantity").toString()));
                 Map<String, Object> map = (Map<String, Object>) obj.get("product");
+    
                 double d = (Double.parseDouble(map.get("id") + ""));
                 int x = (int) d;
                 produit.setId(x);
                 produit.setBrand((String) map.get("brand"));
-//                produit.setBrand(((Produit) obj.get("product")).getBrand());
+   //             produit.setBrand(((Produit) obj.get("product")).getBrand());
 
                 listProduit.add(produit);
             }
@@ -100,7 +102,7 @@ public class CartService {
     public int add(int idproduit) {
 
         cr = new ConnectionRequest();
-        cr.setUrl(Statics.BASE_URL + "/cart/add/" + idproduit);
+        cr.setUrl(Statics.BASE_URL + "/cart/add/" + idproduit +"/"+ SessionManager.getId() );
         cr.setHttpMethod("POST");
 
         cr.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -122,7 +124,7 @@ public class CartService {
     public int remove(int idproduit) {
 
         cr = new ConnectionRequest();
-        cr.setUrl(Statics.BASE_URL + "/cart/remove/" + idproduit);
+        cr.setUrl(Statics.BASE_URL + "/cart/remove2/" + idproduit +"/"+ SessionManager.getId()  );
         cr.setHttpMethod("POST");
 
         cr.addResponseListener(new ActionListener<NetworkEvent>() {

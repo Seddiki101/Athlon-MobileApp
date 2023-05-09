@@ -58,6 +58,24 @@ class CartService1
     }
 
 
+    public function removeV2(int $id,int $cin)
+    {
+
+        $cart = $this->session->get('cart', []);
+
+        $commandeitem = new \App\Entity\CommandeItem();
+        $commandeitem->setQuantity($cart[$id])
+            ->setProduit($this->produitRepository->find($id))
+            ->setCommande($this->getCurrentOrderV2($cin));
+        CommandeItemService::delete($commandeitem, $this->commandeitemRepo, $this->entityManager);
+
+        if (!empty($cart[$id]))
+            unset($cart[$id]);
+        $this->session->set('cart', $cart);
+        $this->session->migrate();
+    }
+
+
     public function add(int $id)
     {
 
@@ -79,6 +97,28 @@ class CartService1
     }
 
 
+    public function addV2(int $id,int $cin)
+    {
+
+        $cart = $this->session->get('cart', []);
+        if (!empty($cart[$id]))
+            $cart[$id]++;
+        else
+            $cart[$id] = 1;
+
+        $commandeItem = new \App\Entity\CommandeItem();
+        $commandeItem->setQuantity($cart[$id])
+            ->setProduit($this->produitRepository->find($id))
+            ->setCommande($this->getCurrentOrderV2($cin));
+
+
+        CommandeItemService::insertOrUpdate($commandeItem, $this->commandeitemRepo, $this->entityManager);
+        $this->session->set('cart', $cart);
+
+    }
+
+
+
     public function clear()
     {
         $this->session->set('cart', []);
@@ -95,6 +135,23 @@ class CartService1
             'statue' => 'pending'
         ]));
     }
+
+
+
+
+    public function getCurrentOrderV2($cin): \App\Entity\Commande
+    {
+
+
+        return $this->session->get('currentOrder', $this->commandeRepo->findOneBy([
+            'user' =>  $cin,
+            'statue' => 'pending'
+        ]));
+    }
+
+
+
+
 
     public function getCart(): array
     {
@@ -135,7 +192,7 @@ class CartService1
                 'product' => $item->getProduit(),
                 'quantity' => $item->getQuantity()
             ];
-            $cart[$item->getProduit()->getIdP()] = $item->getQuantity();
+            $cart[$item->getProduit()->getId()] = $item->getQuantity();
             $this->session->set('cart', $cart);
         }
         return $cartWithData;
