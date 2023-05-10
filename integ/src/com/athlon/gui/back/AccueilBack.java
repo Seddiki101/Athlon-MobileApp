@@ -6,6 +6,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import gui.ProfileForm;
 
 public class AccueilBack extends Form {
 
@@ -25,6 +26,18 @@ public class AccueilBack extends Form {
         Button btnDeconnexion = new Button();
         btnDeconnexion.setUIID("buttonLogout");
         btnDeconnexion.setMaterialIcon(FontImage.MATERIAL_ARROW_FORWARD);
+        
+        
+        
+        btnDeconnexion.addActionListener(actionConf -> {
+                
+                       theme = UIManager.initFirstTheme("/theme");     
+                    
+                         new ProfileForm(theme).show() ;
+        });
+        
+        
+        
         Container userContainer = new Container(new BorderLayout());
         userContainer.setUIID("userContainer");
         userContainer.add(BorderLayout.WEST, userImage);

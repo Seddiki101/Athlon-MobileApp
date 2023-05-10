@@ -19,6 +19,7 @@
 
 package gui;
 
+import com.athlon.gui.back.AccueilBack;
 import com.athlon.gui.front.AccueilFront;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.io.Storage;
@@ -89,8 +90,14 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_UPDATE, e -> new ListReclamationForm(res).show());
         tb.addMaterialCommandToSideMenu("Add Reclamations", FontImage.MATERIAL_UPDATE, e -> new AjoutReclamationForm(res).show());
 
+        if(SessionManager.getEmail().equals("tech@athlon.com"))
+        {
+            tb.addMaterialCommandToSideMenu("Other", FontImage.MATERIAL_SETTINGS, e -> new com.athlon.gui.back.AccueilBack().show() );
+        }
+        else 
         tb.addMaterialCommandToSideMenu("Other", FontImage.MATERIAL_SETTINGS, e -> new AccueilFront().show() );
         //tb.addMaterialCommandToSideMenu("Other", new com.athlon.gui.front.employee.ShowAll(this).show() );
+        
         
             tb.addMaterialCommandToSideMenu("Log Out", FontImage.MATERIAL_EXIT_TO_APP, e -> {
             new loginForm(res).show();

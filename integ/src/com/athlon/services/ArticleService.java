@@ -86,8 +86,8 @@ public class ArticleService {
                         (String) obj.get("descripton"),
                         (String) obj.get("imgArticle")
                 );
-                article.setLike((int) Float.parseFloat(obj.get("likes").toString()));
-                article.setDislike((int) Float.parseFloat(obj.get("dislikes").toString()));
+//                article.setLike((int) Float.parseFloat(obj.get("likes").toString()));
+//                article.setDislike((int) Float.parseFloat(obj.get("dislikes").toString()));
                 Map<String, Object> mapSujet = (Map<String, Object>) obj.get("SujetX");
                 if (mapSujet != null) {
                     Sujet sujet = new Sujet(
